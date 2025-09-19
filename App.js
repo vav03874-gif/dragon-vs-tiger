@@ -1,35 +1,40 @@
-import { StyleSheet, Text, View } from 'react-native';
-
-// You can import supported modules from npm
-import { Card } from 'react-native-paper';
-
-// or any files within the Snack
-import AssetExample from './components/AssetExample';
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function App() {
+  const [result, setResult] = useState("");
+
+  const playGame = (choice) => {
+    const choices = ["🐉 Dragon", "🐯 Tiger"];
+    const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+    if (choice === randomChoice) {
+      setResult("🎉 You Win! " + choice);
+    } else {
+      setResult("❌ You Lose! " + randomChoice);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>
-        Change code in the editor and watch it change on your phone! Save to get a shareable url.
-      </Text>
-      <Card>
-        <AssetExample />
-      </Card>
+      <Text style={styles.title}>Dragon 🐉 vs Tiger 🐯</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => playGame("🐉 Dragon")}>
+        <Text style={styles.btnText}>Choose Dragon 🐉</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => playGame("🐯 Tiger")}>
+        <Text style={styles.btnText}>Choose Tiger 🐯</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.result}>{result}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#222" },
+  title: { fontSize: 26, fontWeight: "bold", color: "white", marginBottom: 30 },
+  button: { backgroundColor: "#ff9800", padding: 15, borderRadius: 10, margin: 10 },
+  btnText: { fontSize: 18, color: "white" },
+  result: { fontSize: 22, marginTop: 30, color: "#fff" },
 });
